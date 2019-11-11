@@ -1,6 +1,6 @@
 import pandas as pd
 
-def database(country, ranking):
+def cleaning(country, ranking):
     df = pd.read_csv('../data-analysis-pipeline/Input/results.csv')
     df['date'] = pd.to_datetime(df['date'])
     df['day'] = df['date'].dt.day
@@ -36,4 +36,19 @@ def database(country, ranking):
         df.loc[index, 'away_points'] = points(row['away_score'], row['home_score'])
     
     df = [['home_team', 'away_team', 'home_points', 'away_points']]
-    return df
+    df[['home_team', 'awaỵ_team']] = df[['home_team', 'away_team']].apply(lambda x: x.str.upper())
+    home = df.groupby('home_team', as_index=False).agg({'home_points': 'mean'})
+    home = home.rename(columns = {'home_team': 'Country'})
+    away = df.groupby('away_team', as_index=False).agg({'away_points':'mean'})
+    away = away.rename(columns = {'away_team':'Country'})
+    definitive = pd.merge(home, away, on='Country')
+    definitive['MPP'] = definitive['home_points'] + definitive['away_points']
+    definitive = definitive[['Country','MPP']]
+    lista = ['ANDALUSIA', 'BASQUE COUNTRY', 'KERNOW', 'ARTSAKH', 'YORKSHIRE', 'YUGOSLAVIA', 'ABKHAZIA', 'JERSEY', 'CZECHOSLOVAKIA', 'MICRONESIA']
+    definitive = definitive.loc[(~definitive['Country'].isin(lista))]
+    definitive = definitive.sort_values(by='prueba', ascending = False)
+    definitive = definitive.reset_index()
+    definitive = definitive[['Country', 'MPP']]
+    definitive['Position'] = definitive.index + 1
+    definitive = definitive[['Position', 'Country', 'MPP']]
+    return definitive
