@@ -1,6 +1,6 @@
 import pandas as pd
 
-def cleaning(country, ranking):
+def cleaning(country):
     df = pd.read_csv('../data-analysis-pipeline/Input/results.csv')
     df['date'] = pd.to_datetime(df['date'])
     df['day'] = df['date'].dt.day
@@ -36,7 +36,10 @@ def cleaning(country, ranking):
         df.loc[index, 'away_points'] = points(row['away_score'], row['home_score'])
     
     df = [['home_team', 'away_team', 'home_points', 'away_points']]
-    df[['home_team', 'awaỵ_team']] = df[['home_team', 'away_team']].apply(lambda x: x.str.upper())
+
+    df[['home_team']] = df[['home_team']].apply(lambda x: x.str.upper())
+    df[['away_team']] = df[['away_team']].apply(lambda x: x.str.upper())
+
     home = df.groupby('home_team', as_index=False).agg({'home_points': 'mean'})
     home = home.rename(columns = {'home_team': 'Country'})
     away = df.groupby('away_team', as_index=False).agg({'away_points':'mean'})
@@ -51,4 +54,5 @@ def cleaning(country, ranking):
     definitive = definitive[['Country', 'MPP']]
     definitive['Position'] = definitive.index + 1
     definitive = definitive[['Position', 'Country', 'MPP']]
-    return definitive
+    position = definitive.loc[definitive['Country'] == country, 'Position'].iloc[0]
+    return "{} is the {} best country in football in the last 30 years.".format(country, position)
