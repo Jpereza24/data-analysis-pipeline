@@ -23,6 +23,7 @@ def web_scrapping(country):
             return None
         
     rfifa = pd.DataFrame(list(filter(lambda x: x, map(lambda t: rankingFifa(t), scrapping(url)))))
-    position = rfifa.loc[rfifa['Country']== country, 'Position'].iloc[0]
+    position = list(rfifa.loc[rfifa['Country']== country, 'Position'])
+    position = position[0]
     return '{} have the {} position in the current Ranking FIFA'.format(country, position)
 

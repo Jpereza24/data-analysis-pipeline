@@ -52,5 +52,6 @@ def database(country):
     definitive = definitive[['Country', 'MPP']]
     definitive['Position'] = definitive.index + 1
     definitive = definitive[['Position', 'Country', 'MPP']]
-    position = definitive.loc[(definitive['Country'] == country), 'Position'].iloc[0]
-    return "{} is the {} best country in football in the last 30 years.".format(country, position)
+    position = list(definitive.loc[definitive['Country'] == country, 'Position'])
+    position = position[0]
+    return "{} is the {} best country in football for the last 30 years.".format(country, position)
