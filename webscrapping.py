@@ -9,15 +9,15 @@ def web_scrapping(country):
         res = requests.get(url)
         html = res.text
         soup = BeautifulSoup(html, 'html.parser')
-        fifa = soup.select('tbody')[0].find_all('tr')
-        return fifa
+        result = soup.select('tbody')[0].find_all('tr')
+        return result
     
     def rankingFifa(t):
         trr = t.find_all('td')
         try:
             return {
                 'Position': trr[0].text,
-                'Name': re.sub('\\n', '', trr[1].text.upper().strip())[:-3]
+                'Country': re.sub('\\n', '', trr[1].text.upper().strip())[:-3]
             }
         except:
             return None

@@ -1,11 +1,11 @@
 import pandas as pd
 
-def cleaning(country):
+def database(country):
     df = pd.read_csv('../data-analysis-pipeline/Input/results.csv')
     df['date'] = pd.to_datetime(df['date'])
     df['day'] = df['date'].dt.day
-    df['month'] = df['month'].dt.month
-    df['year'] = df['year'].dt.year
+    df['month'] = df['date'].dt.month
+    df['year'] = df['date'].dt.year
     df = df.loc[(df['year'] > 1990)]
     coleliminar = ['date', 'city', 'country', 'neutral', 'day', 'month', 'year']
     df = df.drop(coleliminar, axis=1)
@@ -47,10 +47,10 @@ def cleaning(country):
     definitive = definitive[['Country','MPP']]
     lista = ['ANDALUSIA', 'BASQUE COUNTRY', 'KERNOW', 'ARTSAKH', 'YORKSHIRE', 'YUGOSLAVIA', 'ABKHAZIA', 'JERSEY', 'CZECHOSLOVAKIA', 'MICRONESIA']
     definitive = definitive.loc[(~definitive['Country'].isin(lista))]
-    definitive = definitive.sort_values(by='prueba', ascending = False)
+    definitive = definitive.sort_values(by='MPP', ascending = False)
     definitive = definitive.reset_index()
     definitive = definitive[['Country', 'MPP']]
     definitive['Position'] = definitive.index + 1
     definitive = definitive[['Position', 'Country', 'MPP']]
-    position = definitive.loc[definitive['Country'] == country, 'Position'].iloc[0]
+    position = definitive.loc[(definitive['Country'] == country), 'Position'].iloc[0]
     return "{} is the {} best country in football in the last 30 years.".format(country, position)
