@@ -35,11 +35,9 @@ def cleaning(country):
     for index, row in df.iterrows():
         df.loc[index, 'away_points'] = points(row['away_score'], row['home_score'])
     
-    df = [['home_team', 'away_team', 'home_points', 'away_points']]
-
+    df = df[['home_team', 'away_team', 'home_points', 'away_points']]
     df[['home_team']] = df[['home_team']].apply(lambda x: x.str.upper())
     df[['away_team']] = df[['away_team']].apply(lambda x: x.str.upper())
-
     home = df.groupby('home_team', as_index=False).agg({'home_points': 'mean'})
     home = home.rename(columns = {'home_team': 'Country'})
     away = df.groupby('away_team', as_index=False).agg({'away_points':'mean'})
