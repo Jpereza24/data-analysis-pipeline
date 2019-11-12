@@ -3,8 +3,8 @@ import re
 import requests
 from bs4 import BeautifulSoup
 import argparse
-from cleaning import database
-from webscrapping import web_scrapping
+import src.cleaning as cl
+import src.webscrapping as wb
 
 def parse():    
     parser = argparse.ArgumentParser(description='Give you back the position of a country in the current ranking FIFA compared to its results in the last 30 years.')
@@ -14,9 +14,9 @@ def parse():
 
 def main():
     args = parse()
-    last30years = database(args.country)
+    last30years = cl.database(args.country)
     print(last30years)
-    fifar = web_scrapping(args.country)
+    fifar = wb.web_scrapping(args.country)
     print(fifar)
     
 if __name__ == '__main__':
