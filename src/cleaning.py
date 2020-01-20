@@ -1,5 +1,5 @@
 import pandas as pd
-import cleaning_functions as cf
+from src import cleaning_functions as cf
 
 def database(c1, c2):
     df = pd.read_csv('../data-analysis-pipeline/Input/results.csv')

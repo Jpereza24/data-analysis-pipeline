@@ -2,7 +2,7 @@ import re
 import requests
 from bs4 import BeautifulSoup
 import pandas as pd
-import scrapping_functions as sf
+from src import scrapping_functions as sf
 
 def web_scrapping(c1, c2):
     url = "https://www.fifa.com/fifa-world-ranking/ranking-table/men/"
