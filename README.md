@@ -8,3 +8,9 @@ I have cleaned the database and have made a function to assign points to the nat
 To compare this database with the ranking FIFA I had to do web scraping in the official web page of FIFA organization (https://www.fifa.com/fifa-world-ranking/ranking-table/men/) to get the current ranking FIFA.
 
 To get the result of the comparison there is two arguments (country1, country2) in capital letters, in the terminal you can write the first country name after the command (--c1) and the second country after the command(--c2) and the pipeline will return the ranking of the two national teams during the last 30 years and their current ranking in the FIFA clasification.
+
+The structure of the repository is the following:
+- Input: Where is the original database from Kaggle.
+- Pruebas: Folder where are the jupyter notebooks I have used to check the output of the functions.
+- src: Folder where are all the functions I have used in the project.
+- main: The program to use in terminal and look for the output.
